@@ -7,6 +7,7 @@ var exist = require('easy-exist');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var fs = require("fs");
+var xml = require('xml');
 var Connection = require('./existdb-node-master/index.js')
 var options = {
     host: "localhost",
@@ -50,13 +51,40 @@ app.get('/', function (req, res) {
         console.log(ObtainUniqueValues(donneesBrutes));
       }
   });*/
-  getRegions();
-  res.send("Hello World");
+  //getRegions();
+  //res.send("Hello World");
+  res.sendFile(path.join(__dirname+"/../client_Angular/client.html"));
 
 });
 
-app.get('/tt', function (req, res) {
-  res.sendFile(path.join(__dirname+'/test.html'));
+app.get('/obtenirRegions', function (req, res) {
+  //res.sendFile(path.join(__dirname+'/test.html'));
+  res.set('Content-Type', 'text/json');
+
+  var xquery = fs.readFileSync("fonc.xql", "UTF-8");
+  var getRegions = connection.query(xquery, { chunkSize: 20 });  // chunckSize = nombre de doc à retourner
+  getRegions.on("error", function(err) {
+      console.log("An error occurred: " + err);
+  });
+  /*var regions = [];
+  var data = {};
+
+  getRegions.bind().each(function(item, hits, offset) {
+      regions.push({"nomRegion" : item.toLowerCase()});
+      if(offset == hits)
+      {
+        data.regions = regions;
+        res.send(JSON.stringify(ObtainUniqueValues(regions)));
+      }
+  });*/
+  var donneesBrutes = new Array();
+  getRegions.bind().each(function(item, hits, offset) {
+      donneesBrutes.push(item.toLowerCase());
+      if(offset == hits)
+      {
+        res.send(ObtainUniqueValues(donneesBrutes));
+      }
+  });
 });
 
 
@@ -69,11 +97,10 @@ function getRegions()
   });
   var donneesBrutes = new Array();
   getRegions.bind().each(function(item, hits, offset) {
-      //console.log("Item %d out of %d:", offset, hits);
       donneesBrutes.push(item.toLowerCase());
       if(offset == hits)
       {
-        console.log(ObtainUniqueValues(donneesBrutes));
+        //console.log(ObtainUniqueValues(donneesBrutes));
         GestionTailleReponse(ObtainUniqueValues(donneesBrutes).length);
         return ObtainUniqueValues(donneesBrutes);
       }
