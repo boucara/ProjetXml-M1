@@ -13,7 +13,7 @@ var options = {
     host: "localhost",
     port: 8080,
     rest: "/exist/rest",
-    auth: "admin:"
+    auth: "admin:Etudiante1995"
 };
 var connection = new Connection(options);
 const PORT=1337;
