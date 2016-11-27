@@ -6,7 +6,29 @@ div {
 	height:100px;
 	background-color:#00CCFF;
 	}
-div#contenu {
+
+	
+	.jumbotron { 
+    background-color: #8E3557; 
+    color: #ffffff;
+	 padding: 25px 10px;
+}
+
+.footer { 
+    background-color: #f4511e; 
+    color: #ffffff;
+	 
+}
+.col-sm-4 {
+        text-align: center;
+        
+    }
+#logo-etu{
+	
+	 width:300px ;
+	 height:100px
+}
+	div#contenu {
 	float:left;
 	width:80%;
 	height:600px;
@@ -29,16 +51,16 @@ div#piedpage {
 	}
 #logo-univ{
 	float:center-right;
-	background-color:white
+	background-color:white;
 			}
 #logo-miage{ 
 	float:center-right;
-	background-color:white
+	background-color:white;
 			}
 #icone{
 		float:center-right; 
 		background-color:white
 			}
 #chapeau{ float:center-right;
-		background-color:white
+		
 			}

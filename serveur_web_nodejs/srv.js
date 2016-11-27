@@ -54,6 +54,7 @@ app.get('/', function (req, res) {
   //getRegions();
   //res.send("Hello World");
   res.sendFile(path.join(__dirname+"/../client_Angular/client.html"));
+	
 
 });
 
