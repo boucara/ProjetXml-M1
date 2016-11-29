@@ -2,7 +2,7 @@
 <html ng-app="myApp">
 
 <head>
-	<link rel="stylesheet" type="text/css" href="styles/style.css">
+	<link rel="stylesheet" type="text/css" href="./styles/style.css">
   <script type="text/javascript"
         src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
   <script type="text/javascript">
@@ -21,9 +21,26 @@
           $scope.regions = response.data; // On stock le JSON obtenu par le WebService
           },
           function errorCallback(response) {
-            alert("Echec de l'import des données");
+            alert("Echec de l'import des régions");
         })
      };
+		 /*$scope.GETObtenirDepartement = function() {
+			 $http({
+         method : 'GET',
+         url : 'http://localhost:1337/obtenirDepartement',
+
+         headers: {
+           'Content-Type': 'application/JSON'
+         },
+       }).then(
+           function successCallback(response) {
+           $scope.regions = response.data; // On stock le JSON obtenu par le WebService
+           },
+           function errorCallback(response) {
+             alert("Echec de l'import des départements");
+         })
+      };*/
+		 }
   }]);
   </script>
 </head>
@@ -32,32 +49,30 @@
 	<div id="bandeau">
 		<div>
 		<h1>Application cliente de visualisation de Monuments</h1>
-		<img id="chapeau" src="images/chapeau.jpg" alt="image"  width="100px" height="50px" >
+		<!--<img id="chapeau" src="images/chapeau.jpg" alt="image"  width="100px" height="50px" >-->
 		</div>
 	</div>
 		<div id="contenu">
-			<h2> Bienvenu! Localiser facilement les monuments histoirique de la France <img id="icone" src="images/icone.jpg" alt="icone"  width="70px" height="50px"></h2>
+			<h2> Bienvenue ! Localiser facilement les monuments historiques en France et par régions <img id="icone" src="images/icone.jpg" alt="icone"  width="70px" height="50px"></h2>
 		</div>
-	<div id="menu">		
+	<div id="menu">
  <button ng-click="GETobtenirRegions()">Obtenir Régions</button>
   <ul ng-show="regions">
     <h2>{{regions.length}} regions<h2>
     <li ng-repeat="region in regions">
-      <h3>{{region}}</h3>
+      <a href=""><h4 ng-click="GETObtenirDepartement()">{{region}}</h4></a>
     </li>
   </ul>
    </div>
    <div id="piedpage">
 		<div>
 			<h3>Master MIAGE </h3><br>
-			<img  id ="logo-miage"src="images/logo_miage.png" alt="logo miage Nice"  width="70px" height="30px">
-			<img  id="logo-univ"src="images/logo-univ.png" alt="logo univ Nice"  width="70px" height="30px">
-			<i>universite sophia antipolis annee 2016-2017</i>
+			<!--<img  id ="logo-miage"src="images/logo_miage.png" alt="logo miage Nice"  width="70px" height="30px">
+			<img  id="logo-univ"src="images/logo-univ.png" alt="logo univ Nice"  width="70px" height="30px">-->
+			<i>Université de Nice-Sophia Antipolis 2016-2017</i>
 			</div>
-		
-		
   </div>
-  
+
 
 </body>
 

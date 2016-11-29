@@ -1,3 +1,3 @@
-for $i in collection("/db/monuments/")
+for $i in collection("monuments")//row
 where $i//REG="Champagne-Ardenne"
 return $i
