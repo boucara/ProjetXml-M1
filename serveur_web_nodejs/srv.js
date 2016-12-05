@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 var fs = require("fs");
 var xml = require('xml');
 var Connection = require('./existdb-node-master/index.js')
+
 var options = {
     host: "localhost",
     port: 8080,
@@ -24,7 +25,12 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
 app.use(bodyParser.json());                                     // parse application/json
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
-app.set('view engine', 'ejs');
+//app.set('view engine', 'html');
+//app.set(views; '../client_angular');
+app.use(express.static('../client_angular'));
+//app.use(express.static(_dirname+'/client_angular/styles/css/boostrap/css'));
+//app.use(express.static(_dirname+'/client_angular/images'));
+
 
 //getRegions();
 
