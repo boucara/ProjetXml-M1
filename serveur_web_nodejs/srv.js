@@ -65,10 +65,8 @@ app.get('/', function (req, res) {
 });
 
 app.get('/obtenirRegions', function (req, res) {
-  //res.sendFile(path.join(__dirname+'/test.html'));
   res.set('Content-Type', 'text/json');
-
-  var xquery = fs.readFileSync("fonc.xql", "UTF-8");
+  var xquery = fs.readFileSync("foncRegions.xql", "UTF-8");
   var getRegions = connection.query(xquery, { chunkSize: 20 });  // chunckSize = nombre de doc à retourner
   getRegions.on("error", function(err) {
       console.log("An error occurred: " + err);
@@ -94,6 +92,24 @@ app.get('/obtenirRegions', function (req, res) {
   });
 });
 
+app.get('/obtenirDepartement', function (req, res) {
+  /*
+  //var xquery = fs.readFileSync("foncDepartementParRegions.xql", "UTF-8");
+  var getDeparte = connection.query("for $i in collection('monuments')//row where $i//REG='Provence-Alpes-Côte d'Azur' order by $i//DPT return $i//DPT", { chunkSize: 20 });  // chunckSize = nombre de doc à retourner
+  getDeparte.on("error", function(err) {
+      console.log("An error occurred: " + err);
+  });
+  var donneesBrutesDeparte = new Array();
+  getDeparte.bind().each(function(item, hits, offset) {
+      donneesBrutesDeparte.push(item);
+      console.log(item);
+      if(offset == hits)
+      {
+        console.log(ObtainUniqueValues(donneesBrutesDeparte));
+        //res.send(ObtainUniqueValues(donneesBrutesMonu));
+      }
+  });*/
+});
 
 function getRegions()
 {
