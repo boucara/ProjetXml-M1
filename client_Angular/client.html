@@ -33,7 +33,7 @@
         <div class="jumbotron">
             <div class="container text-center">
                 <h1><img src="icone_svg/arc-de-triomphe.svg" height="70" style="margin-top:-10px;"> Story Monument <img src="icone_svg/louvre.svg" height="70" style="margin-top:-10px;"></h1>
-                <p>Localisé les monuments Historique de la France!</p>
+                <p>Localisez les monuments Historique de la France!</p>
             </div>
         </div>
 
@@ -52,20 +52,12 @@
                             </div>
 
                             <div class="from-group form-group-sm">
-                                <button ng-click="GETobtenirRegions()">Obtenir Régions</button>
-				<ul ng-show="regions">
-					<h2>{{regions.length}} regions<h2>
-					<li ng-repeat="region in regions">
-					<h3>{{region}}</h3>
-					</li>
-				</ul>
-                                <label for="sel1">Selectionner un monument:</label>
-                                <select class="form-control">
-                                    <option>Paris</option>
-                                    <option>Monument 2</option>
-                                    <option>Monument 3</option>
-                                    <option>Monument 4</option>
-                                    <option>Monument 5</option>
+                                <button ng-click="GETobtenirRegions()">click et selectionne une région</button>
+				
+                               
+                                <select class="form-control"  ng-show="regions">
+                                    <option  ng-repeat="region in regions"><h3>{{region}}</h3></option>
+                                    
                                 </select>
                             </div>
                         </div>
