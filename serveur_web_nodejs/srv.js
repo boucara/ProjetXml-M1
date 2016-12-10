@@ -71,6 +71,9 @@ app.get('/obtenirRegions', function (req, res) {
   getRegions.on("error", function(err) {
       console.log("An error occurred: " + err);
   });
+  
+  
+  
   /*var regions = [];
   var data = {};
 

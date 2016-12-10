@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="myApp">
+
+</style>
 <head>
 	<link rel="stylesheet" type="text/css" href="./styles/style.css">
 	<meta charset="utf-8">
@@ -14,9 +16,9 @@
 	<link href="styles/css/styles.css" rel="stylesheet">
 
 	<!-- script angular -->
-  <script type="text/javascript"
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script> 
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
 
-        src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script> 
 	
   <script type="text/javascript" src="js/scriptAngular.js">
   
@@ -34,12 +36,41 @@
             <div class="container text-center">
                 <h1><img src="icone_svg/arc-de-triomphe.svg" height="70" style="margin-top:-10px;"> Story Monument <img src="icone_svg/louvre.svg" height="70" style="margin-top:-10px;"></h1>
                 <p>Localisez les monuments Historique de la France!</p>
+				<button style="background-color:#7FC6BC;;" class="btn btn-lg btn-option" type="button" data-toggle="collapse" data-target="#collapseRechercher" aria-expanded="false" aria-controls="collapseRechercher">
+				<span style="font-size: 25px;" class="glyphicon glyphicon-search"></span>
+				Rechercher
+			</button>
             </div>
         </div>
+		
+
 
         <!-- CORPS -->
         <div class="container">
+		<!-- ACTION BOUTONS COLLAPSES -->
+
+<div class="row">
+	<div class="col-md-10 col-md-offset-1">
+		
+		<div class="collapse" id="collapseRechercher">
+			<div class="well" >
+			
+				<fieldset>
+					<legend>Recherche : </legend>
+
+					<label>Critère de recherche :</label>
+					<select class="form-control"  ng-show="regions">
+                                    <option  ng-repeat="region in regions"><h3>{{region}}</h3></option>
+                                    
+                                </select>
+					<button class="btn btn-primary" type="submit" ng-click="filterData()"/>
+						Envoyer
+					</button>
+				</fieldset>
+			</div>
+		</div>
             <div class="row">
+			
                 <!-- DIV DU CONTENU -->
                 <div class="col-xs-12 col-sm-6 .col-md-6">
                     <!-- DIV PANEL -->
