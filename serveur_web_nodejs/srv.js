@@ -8,7 +8,11 @@ var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var fs = require("fs");
 var xml = require('xml');
-var Connection = require('./existdb-node-master/index.js')
+var Connection = require('./existdb-node-master/index.js');
+// test inclusion sparql
+
+
+ 
 
 var options = {
     host: "localhost",
@@ -146,3 +150,6 @@ function ObtainUniqueValues(tab)
     //console.log("Item %d out of %d:", offset, hits);
     console.log(item);
 });*/
+
+// Obtenir une liste de livres, y compris leurs genres. La liste sera formaté ou groupés par genres
+
