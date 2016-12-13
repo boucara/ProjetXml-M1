@@ -22,7 +22,6 @@
 
   <script type="text/javascript" src="js/scriptAngular.js">
 
-
   </script>
     <!-- fin script angular -->
 </head>
@@ -88,8 +87,12 @@
                                     <option ng-click="GETobtenirDepartementsInRegion(region)" ng-repeat="region in regions"><h3>{{region}}</h3></option>
                                 </select>
 																<select class="form-control"  ng-show="departementsInRegion">
-                                    <option ng-click="" ng-repeat="departements in departementsInRegion"><h3>{{departements}}</h3></option>
+                                    <option ng-click="GETobtenirMonumentsDansDepartement(departement)" ng-repeat="departement in departementsInRegion"><h3>{{departement}}</h3></option>
                                 </select>
+																<select class="form-control"  ng-show="monumentsInDepartement">
+                                    <option ng-click="" ng-repeat="monuments in monumentsInDepartement"><h3>{{monuments}}</h3></option>
+                                </select>
+
                             </div>
                         </div>
                     </div>
@@ -192,7 +195,30 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="styles/bootstrap/js/bootstrap.min.js"></script>
 	<!-- Script pour la Map -->
-    <script src="styles/scriptMap/map.js"></script>
+    <script>
+		function initMap() {
+			var myLatLng = {lat: -25.363, lng: 131.044};
+			var map = new google.maps.Map(document.getElementById('map'), {
+				center: myLatLng,
+				scrollwheel: false,
+				zoom: 8
+			});
+		}
+
+		function placerMarkers(latLng) {
+			var myLatLng = {lat: parseInt(latLng[1]), lng: parseInt(latLng[0])};
+			var map = new google.maps.Map(document.getElementById('map'), {
+				center: myLatLng,
+				scrollwheel: false,
+				zoom: 8
+			});
+			var marker = new google.maps.Marker({
+				map: map,
+				position: myLatLng,
+				title: 'Hello World!'
+			});
+		}
+		</script>
 	<script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcVwYXpSfbjWnaRAUvYPjgRY9MulFoaRk&callback=initMap">
     </script>
