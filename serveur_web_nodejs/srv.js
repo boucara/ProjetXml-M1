@@ -12,7 +12,7 @@ var Connection = require('./existdb-node-master/index.js');
 // test inclusion sparql
 
 
- 
+
 
 var SparqlClient = require('sparql-client');
 var util = require('util');
@@ -87,7 +87,7 @@ app.get('/obtenirDepartement', function (req, res) {
 
 
 app.get('/obtenirMonumentsDansDepartement', function (req, res) {
-  var getMonumentDansDepartement = connection.query("distinct-values(for $i in collection('monuments')//row where $i//DPT='"+req.query.departement+"' order by $i//DPT return $i//TICO)",  { chunkSize: 20 });
+  var getMonumentDansDepartement = connection.query("for $i in collection('monuments')//row where $i//DPT='"+req.query.departement+"' order by $i//DPT return $i",  { chunkSize: 20 });
   getMonumentDansDepartement.on("error", function(err) {
       console.log("An error occurred: " + err);
   });
@@ -98,7 +98,8 @@ app.get('/obtenirMonumentsDansDepartement', function (req, res) {
       if(offset == hits)
       {
         //console.log(donneesBrutesMonu);
-        res.send(donneesBrutesMonu);
+        res.set('Content-Type', 'text/json');
+        res.send(JSON.stringify(donneesBrutesMonu));
       }
   });
 
@@ -222,4 +223,3 @@ function ObtainUniqueValues(tab)
 });*/
 
 // Obtenir une liste de livres, y compris leurs genres. La liste sera formaté ou groupés par genres
-

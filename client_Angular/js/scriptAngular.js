@@ -1,4 +1,5 @@
 var myApp = angular.module('myApp',[]);
+
   myApp.controller('MainController', ['$scope', '$http',  function($scope, $http) {
     $scope.GETobtenirRegions = function() {
       $http({
@@ -16,12 +17,6 @@ var myApp = angular.module('myApp',[]);
             alert("Echec de l'import des régions");
         })
      };
-<<<<<<< HEAD
-  }]);
-  
-  
-  
-=======
 
      $scope.GETobtenirDepartementsInRegion = function(region) {
       region = region.substring(0,1).toUpperCase()+region.substring(1);
@@ -47,7 +42,7 @@ var myApp = angular.module('myApp',[]);
       };
 
 
-      $scope.obtenirCoordonneesGPSMonumentsDansDepartement = function(departement) {
+      $scope.GETobtenirCoordonneesGPSDuMonument = function(departement) {
        //region = region.substring(0,1).toUpperCase()+region.substring(1);
         $http({
           method : 'GET',
@@ -85,11 +80,4 @@ var myApp = angular.module('myApp',[]);
                alert("Echec de l'import des monuments");
            })
         };
-
-
-
-
-
-
   }]);
->>>>>>> ec1e6ccb87fc0179eb388520b01ec8d1fc862c52
