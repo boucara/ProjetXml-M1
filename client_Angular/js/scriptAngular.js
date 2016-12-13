@@ -16,6 +16,12 @@ var myApp = angular.module('myApp',[]);
             alert("Echec de l'import des régions");
         })
      };
+<<<<<<< HEAD
+  }]);
+  
+  
+  
+=======
 
      $scope.GETobtenirDepartementsInRegion = function(region) {
       region = region.substring(0,1).toUpperCase()+region.substring(1);
@@ -86,3 +92,4 @@ var myApp = angular.module('myApp',[]);
 
 
   }]);
+>>>>>>> ec1e6ccb87fc0179eb388520b01ec8d1fc862c52
