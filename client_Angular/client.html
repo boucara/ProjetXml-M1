@@ -27,6 +27,7 @@
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
   <script type="text/javascript" src="js/scriptAngular.js"></script>
+  <script type="text/javascript" src="js/angular-image-compress-master/angular-image-compress.js"></script>
 
     <!-- fin script angular -->
 </head>
@@ -48,9 +49,9 @@
         <div class="jumbotron">
             <div class="container text-center">
                 <h1><img src="icone_svg/arc-de-triomphe.svg" height="70" style="margin-top:-10px;"> Story Monument <img src="icone_svg/louvre.svg" height="70" style="margin-top:-10px;"></h1>
-                <p>Localisez les monuments Historique de la France!</p>
-				<button style="background-color:#7FC6BC;;" class="btn btn-lg btn-option" type="button" data-toggle="collapse" data-target="#collapseRechercher" aria-expanded="false" aria-controls="collapseRechercher">
-				<span style="font-size: 25px;" class="glyphicon glyphicon-search"></span>
+                <p>Localisez les monuments Historiques en France !</p>
+				<button ng-click="GETobtenirRegions()" style="background-color:#7FC6BC;;" class="btn btn-lg btn-option" type="button" data-toggle="collapse" data-target="#collapseRechercher" aria-expanded="false" aria-controls="collapseRechercher">
+				<span  style="font-size: 25px;" class="glyphicon glyphicon-search"></span>
 				Rechercher
 			</button>
             </div>
@@ -69,51 +70,50 @@
 			<div class="well" >
 
 				<fieldset>
-					<legend>Recherche : </legend>
 
-					<label>Critère de recherche :</label>
-					<select class="form-control"  ng-show="regions">
-                                    <option  ng-click="yolo()" ng-repeat="region in regions"><h3>{{region}}</h3></option>
+          <div class="from-group form-group-sm">
+                              <label for="selectRegion" ng-show="regions">Regions</label>
+                              <select id="selectRegion" class="form-control"  ng-show="regions">
+                                  <option ng-click="GETobtenirDepartementsInRegion(region)" ng-repeat="region in regions"><h3>{{region}}</h3></option>
+                              </select>
+                              <br>
+                              <label for="selectDept" ng-show="departementsInRegion">Departements</label>
+                              <select id="selectDept" class="form-control"  ng-show="departementsInRegion">
+                                  <option ng-click="GETobtenirMonumentsDansDepartement(departement)" ng-repeat="departement in departementsInRegion"><h3>{{departement}}</h3></option>
+                              </select>
+                              <br>
+                              <label for="selectMonu" ng-show="monumentsInDepartement">Monuments</label>
+                              <select id="selectMonu" class="form-control"  ng-show="monumentsInDepartement">
+                                  <option ng-click="GETobtenirCoordonneesGPSDuMonument(monuments[1])" ng-repeat="monuments in monumentsInDepartement"><h3>{{monuments[0]}}</h3></option>
+                              </select>
+                              <br>
 
-                                </select>
-					<button class="btn btn-primary" type="submit" ng-click="filterData()"/>
-						Envoyer
-					</button>
+                          </div>
 				</fieldset>
 			</div>
 		</div>
             <div class="row">
 
                 <!-- DIV DU CONTENU -->
-                <div class="col-xs-12 col-sm-6 .col-md-6">
+                <div ng-show="image" class="col-xs-12 col-sm-7 col-md-6">
                     <!-- DIV PANEL -->
                     <div class="">
                         <div class="col-xs-12" style="background-color:#fff;padding-bottom:15px;">
                             <div class="lead text-center">
-                                <h3 class="">Application de visualisation de Monuments</h3>
-                                Bienvenue! Localiser facilement les monuments de France
+                                Informations
+                                <br>
 
                             </div>
 
                             <div class="from-group form-group-sm">
-                                <button ng-click="GETobtenirRegions()">click et selectionne une région</button>
-                                <select class="form-control"  ng-show="regions">
-                                    <option ng-click="GETobtenirDepartementsInRegion(region)" ng-repeat="region in regions"><h3>{{region}}</h3></option>
-                                </select>
-																<select class="form-control"  ng-show="departementsInRegion">
-                                    <option ng-click="GETobtenirMonumentsDansDepartement(departement)" ng-repeat="departement in departementsInRegion"><h3>{{departement}}</h3></option>
-                                </select>
-																<select class="form-control"  ng-show="monumentsInDepartement">
-                                    <option ng-click="GETobtenirCoordonneesGPSDuMonument()" ng-repeat="monuments in monumentsInDepartement"><h3>{{monuments}}</h3></option>
-                                </select>
-
+                              <a target="_blank" href={{image}} class="btn btn-link" role="button">Afficher photo</a>
                             </div>
                         </div>
                     </div>
                     <!-- FIN DIV PANEL -->
                 </div>
                 <!-- DIV POUR LA MAP -->
-                <div class="col-xs-12 col-sm-7 col-md-6">
+                <div ng-show="image" class="col-xs-12 col-sm-7 col-md-6">
                     <div id="map"></div>
                 </div>
             </div>
@@ -127,7 +127,7 @@
                 <div class="col-sm-4">
                     <div class="thumbnail">
                         <img src="images/arenes-de-nimes-thumb.jpg" alt="monument" width="400" height="300">
-                        <a href="#" class="btn btn-link" role="button">Link</a>
+
                         <p>Arenes Nimes</p>
                     </div>
                 </div>
@@ -135,7 +135,7 @@
                 <div class="col-sm-4">
                     <div class="thumbnail">
                         <img src="images/chateau-des-ducs-bretagne-thumb.jpg" alt="monument" width="400" height="300">
-                        <a href="#" class="btn btn-link" role="button">Link</a>
+
                         <p>Charteau Bretagne</p>
                     </div>
                 </div>
@@ -143,7 +143,7 @@
                 <div class="col-sm-4">
                     <div class="thumbnail">
                         <img src="images/basilique-de-fourviere.jpg" alt="monument" width="400" height="300">
-                        <a href="#" class="btn btn-link" role="button">Link</a>
+
                         <p>Basilique Fourviere</p>
                     </div>
                 </div>
@@ -154,7 +154,7 @@
                 <div class="col-sm-4">
                     <div class="thumbnail">
                         <img src="images/basilique-saint-nicolas-nantes-thumb.jpg" alt="monument" width="400" height="300">
-                        <a href="#" class="btn btn-link" role="button">Link</a>
+
                         <p>Basilique Nantes</p>
                     </div>
                 </div>
@@ -162,7 +162,7 @@
                 <div class="col-sm-4">
                     <div class="thumbnail">
                         <img src="images/cathedrale-de-chartres.jpg" alt="monument" width="400" height="300">
-                        <a href="#" class="btn btn-link" role="button">Link</a>
+
                         <p>cathedrale chartres</p>
                     </div>
                 </div>
@@ -170,7 +170,7 @@
                 <div class="col-sm-4">
                     <div class="thumbnail">
                         <img src="images/chateau-de-chambord-thumb.jpg" alt="monument" width="400" height="300">
-                        <a href="#" class="btn btn-link" role="button">Link</a>
+
                         <p>Chateau Chambord</p>
                     </div>
                 </div>
@@ -218,21 +218,20 @@
 			var map = new google.maps.Map(document.getElementById('map'), {
 				center: myLatLng,
 				scrollwheel: false,
-				zoom: 8
+				zoom: 6
 			});
 		}
 
-		function placerMarkers(latLng) {
+		function placerMarkers(latLng, img, nom) {
 			var myLatLng = {lat: parseInt(latLng[1]), lng: parseInt(latLng[0])};
 			var map = new google.maps.Map(document.getElementById('map'), {
 				center: myLatLng,
 				scrollwheel: false,
-				zoom: 8
+				zoom: 6
 			});
 			var marker = new google.maps.Marker({
 				map: map,
 				position: myLatLng,
-				title: 'Hello World!'
 			});
 		}
 		</script>
