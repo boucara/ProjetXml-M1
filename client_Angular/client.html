@@ -39,6 +39,21 @@
 
   </script>
     <!-- fin script angular -->
+  <script type="text/javascript" src="js/jspdf.debug.js"></script>
+      <script>
+function demoFromHTML() {
+    var doc = new jsPDF();
+    doc.text(20, 20, 'Hello world!');
+    doc.text(20, 30, 'This is client-side Javascript, pumping out a PDF.');
+    doc.text(20, 40, 'Do you like that?');
+
+    doc.setFillColor(255,0,0);
+    doc.rect(500, 500, 50, 50, 'F');
+
+// Output as Data URI
+    doc.output('datauri');
+}
+</script>
 </head>
 
 <body ng-controller="MainController">
@@ -49,9 +64,9 @@
         <div class="jumbotron">
             <div class="container text-center">
                 <h1><img src="icone_svg/arc-de-triomphe.svg" height="70" style="margin-top:-10px;"> Story Monument <img src="icone_svg/louvre.svg" height="70" style="margin-top:-10px;"></h1>
-                <p>Localisez les monuments Historiques en France !</p>
-				<button ng-click="GETobtenirRegions()" style="background-color:#7FC6BC;;" class="btn btn-lg btn-option" type="button" data-toggle="collapse" data-target="#collapseRechercher" aria-expanded="false" aria-controls="collapseRechercher">
-				<span  style="font-size: 25px;" class="glyphicon glyphicon-search"></span>
+                <p>Fan d'histoire ? Localisez les monuments historiques les plus marquants de France!</p>
+                <button ng-click="GETobtenirRegions()" style="background-color:#7FC6BC;;" class="btn btn-lg btn-option" type="button" data-toggle="collapse" data-target="#collapseRechercher" aria-expanded="false" aria-controls="collapseRechercher">
+        				<span  style="font-size: 25px;" class="glyphicon glyphicon-search"></span>
 				Rechercher
 			</button>
             </div>
@@ -107,6 +122,7 @@
 
                             <div class="from-group form-group-sm">
                               <a target="_blank" href={{image}} class="btn btn-link" role="button">Afficher photo</a>
+                                <button onclick="javascript:demoFromHTML()">PDF</button>
                             </div>
                         </div>
                     </div>
