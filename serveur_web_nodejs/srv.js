@@ -61,6 +61,25 @@ app.get('/obtenirRegions', function (req, res) {
   });
 });
 
+
+app.get('/nbMonumentsinDB', function (req, res) {
+  res.set('Content-Type', 'text/json');
+  var xquery = fs.readFileSync("foncNbMonumentsInDB.xql", "UTF-8");
+  var getNbMonuments = connection.query(xquery, { chunkSize: 20 });
+  getNbMonuments.on("error", function(err) {
+      console.log("An error occurred: " + err);
+  });
+  var donneesBrutes = new Array();
+  getNbMonuments.bind().each(function(item, hits, offset) {
+      donneesBrutes.push(item);
+      if(offset == hits)
+      {
+        res.send(donneesBrutes);
+      }
+  });
+});
+
+
 app.get('/obtenirDepartement', function (req, res) {
   var getDeparte = connection.query('distinct-values(for $i in collection("monuments")//row where $i//REG="'+req.query.region+'" order by $i//DPT return $i//DPT)', { chunkSize: 20 });
   console.log(req.query.region);

@@ -17,6 +17,22 @@ var myApp = angular.module('myApp',[]);
           function errorCallback(response) {
             alert("Echec de l'import des régions");
         })
+
+        $http({
+          method : 'GET',
+          url : 'http://localhost:1337/nbMonumentsinDB',
+
+          headers: {
+            'Content-Type': 'application/JSON'
+          },
+        }).then(
+            function successCallback(response) {
+            $scope.nbMonumentsinDB = response.data; // On stock le JSON obtenu par le WebService
+            },
+            function errorCallback(response) {
+              alert("Echec de l'import des régions");
+          })
+
      };
 
      $scope.GETobtenirDepartementsInRegion = function(region) {
@@ -39,7 +55,12 @@ var myApp = angular.module('myApp',[]);
       };
 
 
-      $scope.GETobtenirCoordonneesGPSDuMonument = function(monumentID) {
+      $scope.GETobtenirCoordonneesGPSDuMonument = function(nomMonument,monumentID,comMonu,regMonu,statMonu,epoqueMonu) {
+        $scope.nomMonu = nomMonument;
+        $scope.comMonu = comMonu;
+        $scope.regMonu = regMonu;
+        $scope.statMonu = statMonu;
+        $scope.epoqueMonu = epoqueMonu;
         $http({
           method : 'GET',
           url : 'http://localhost:1337/obtenirCoordonneesGPSMonument',
@@ -57,10 +78,12 @@ var myApp = angular.module('myApp',[]);
             function errorCallback(response) {
               alert("Echec de l'import des départements");
           })
+
        };
 
 
        $scope.GETobtenirMonumentsDansDepartement = function(departement) {
+         $scope.departement = departement;
          $http({
            method : 'GET',
            url : 'http://localhost:1337/obtenirMonumentsDansDepartement',
@@ -70,20 +93,36 @@ var myApp = angular.module('myApp',[]);
            },
          }).then(
              function successCallback(response) {
-             $scope.reponse = response.data;
+             $scope.monumentsDepartement = response.data;
              $scope.monuments = [];
              $scope.nomMonument;
-             for(var i=0 ; i<$scope.reponse.length ; i++)
+             for(var i=0 ; i<$scope.monumentsDepartement.length ; i++)
              {
-               var start = $scope.reponse[i].indexOf("<TICO>")+6;
-               var end = $scope.reponse[i].indexOf("</TICO>");
-               $scope.nomMonument = $scope.reponse[i].slice(start,end);
+               var start = $scope.monumentsDepartement[i].indexOf("<TICO>")+6;
+               var end = $scope.monumentsDepartement[i].indexOf("</TICO>");
+               var nomMonument = $scope.monumentsDepartement[i].slice(start,end);
 
-               var start = $scope.reponse[i].indexOf("<REF>")+5;
-               var end = $scope.reponse[i].indexOf("</REF>");
-               var refMonu = $scope.reponse[i].slice(start,end);
+               start = $scope.monumentsDepartement[i].indexOf("<REF>")+5;
+               end = $scope.monumentsDepartement[i].indexOf("</REF>");
+               var refMonu = $scope.monumentsDepartement[i].slice(start,end);
 
-               $scope.monuments.push([$scope.nomMonument,refMonu]);
+               start = $scope.monumentsDepartement[i].indexOf("<COM>")+5;
+               end = $scope.monumentsDepartement[i].indexOf("</COM>");
+               var comMonu = $scope.monumentsDepartement[i].slice(start,end);
+
+               start = $scope.monumentsDepartement[i].indexOf("<REG>")+5;
+               end = $scope.monumentsDepartement[i].indexOf("</REG>");
+               var regMonu = $scope.monumentsDepartement[i].slice(start,end);
+
+               start = $scope.monumentsDepartement[i].indexOf("<STAT>")+6;
+               end = $scope.monumentsDepartement[i].indexOf("</STAT>");
+               var statMonu = $scope.monumentsDepartement[i].slice(start,end);
+
+               start = $scope.monumentsDepartement[i].indexOf("<SCLE>")+6;
+               end = $scope.monumentsDepartement[i].indexOf("</SCLE>");
+               var epoqueMonu = $scope.monumentsDepartement[i].slice(start,end);
+
+               $scope.monuments.push([nomMonument,refMonu,comMonu,regMonu,statMonu,epoqueMonu]);
              }
 
              $scope.monumentsInDepartement = $scope.monuments.sort();
@@ -93,4 +132,9 @@ var myApp = angular.module('myApp',[]);
                alert("Echec de l'import des monuments");
            })
         };
+
+
+        $scope.formatNumber = function(i) {
+           return Math.round(i * 100)/100; 
+        }
   }]);

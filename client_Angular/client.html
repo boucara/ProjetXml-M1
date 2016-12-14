@@ -80,6 +80,7 @@ function demoFromHTML() {
 
 <div class="row">
 	<div class="col-md-10 col-md-offset-1">
+    <svg id="mySVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"/>
 
 		<div class="collapse" id="collapseRechercher">
 			<div class="well" >
@@ -97,9 +98,9 @@ function demoFromHTML() {
                                   <option ng-click="GETobtenirMonumentsDansDepartement(departement)" ng-repeat="departement in departementsInRegion"><h3>{{departement}}</h3></option>
                               </select>
                               <br>
-                              <label for="selectMonu" ng-show="monumentsInDepartement">Monuments</label>
+                              <label for="selectMonu" ng-show="monumentsInDepartement">{{monumentsDepartement.length}} monuments trouvés</label>
                               <select id="selectMonu" class="form-control"  ng-show="monumentsInDepartement">
-                                  <option ng-click="GETobtenirCoordonneesGPSDuMonument(monuments[1])" ng-repeat="monuments in monumentsInDepartement"><h3>{{monuments[0]}}</h3></option>
+                                  <option ng-click="GETobtenirCoordonneesGPSDuMonument(monuments[0],monuments[1],monuments[2],monuments[3],monuments[4],monuments[5])" ng-repeat="monuments in monumentsInDepartement"><h3>{{monuments[0]}}</h3></option>
                               </select>
                               <br>
 
@@ -114,14 +115,24 @@ function demoFromHTML() {
                     <!-- DIV PANEL -->
                     <div class="">
                         <div class="col-xs-12" style="background-color:#fff;padding-bottom:15px;">
-                            <div class="lead text-center">
-                                Informations
+                            <div style="text-align : left;" class="lead text-center">
+                                Informations sur le monument sélectionné
                                 <br>
-
+                                <b>{{nomMonu}}</b>
+                                <br>
+                                <b>Ville :</b>  {{comMonu}}
+                                <br>
+                                <b>Region :</b>  {{regMonu}}
+                                <br>
+                                <b>Status :</b>  {{statMonu}}
+                                <br>
+                                <b>Epoque :</b>  {{epoqueMonu}}
+                                <br>
+                                <b>Pourcentage des monuments français dans le département du {{departement}} : </b>{{formatNumber(monumentsDepartement.length/nbMonumentsinDB)}}%
                             </div>
 
                             <div class="from-group form-group-sm">
-                              <a target="_blank" href={{image}} class="btn btn-link" role="button">Afficher photo</a>
+                                <a target="_blank" href={{image}} class="btn btn-link" role="button">Afficher photo</a>
                                 <button onclick="javascript:demoFromHTML()">PDF</button>
                             </div>
                         </div>
@@ -239,11 +250,11 @@ function demoFromHTML() {
 		}
 
 		function placerMarkers(latLng, img, nom) {
-			var myLatLng = {lat: parseInt(latLng[1]), lng: parseInt(latLng[0])};
+			var myLatLng = {lat: parseFloat(latLng[1]), lng: parseFloat(latLng[0])};
 			var map = new google.maps.Map(document.getElementById('map'), {
 				center: myLatLng,
 				scrollwheel: false,
-				zoom: 6
+				zoom: 16
 			});
 			var marker = new google.maps.Marker({
 				map: map,
