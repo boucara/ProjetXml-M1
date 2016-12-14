@@ -71,8 +71,7 @@ function demoFromHTML() {
 			</button>
             </div>
 			<form method="post" action="svg-map">
-			
-			<input type="button" name="lien1" value="SVG MAP Regions " onclick="self.location.href='svg-map/index.html'" style="background-color:#3cb371" style="color:white; font-weight:bold"onclick>
+
 			</form>
         </div>
 
@@ -86,7 +85,7 @@ function demoFromHTML() {
 	<div class="col-md-10 col-md-offset-1">
     <svg id="mySVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"/>
 
-		<div class="collapse" id="collapseRechercher">
+		<div style="position : relative; bottom : 100px;" class="collapse" id="collapseRechercher">
 			<div class="well" >
 
 				<fieldset>
@@ -146,8 +145,11 @@ function demoFromHTML() {
                 <!-- DIV POUR LA MAP -->
                 <div ng-show="image" class="col-xs-12 col-sm-7 col-md-6">
                     <div id="map"></div>
+                    <input type="button" name="lien1" value="SVG MAP Regions " onclick="self.location.href='svg-map/index.html'" style="background-color:#3cb371" style="color:white; font-weight:bold"onclick>
                 </div>
             </div>
+
+
 
 
 
